@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #4a4a4a
+    }
+
+    .time-bar {
+      display: flex;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .time-bar::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      background-color: #027956;
+      animation: time-flies 5s linear 0s infinite normal none;
+    }
+
+    @keyframes time-flies {
+      to {
+        width: 100%;
+      }
+    }
+
+    .time-slice {
+      width: 100px;
+      height: 20px;
+      box-sizing: border-box;
+      border-color: white;
+      border-style: solid;
+      border-width: 2px 1px;
+    }
+
+    .time-slice:first-child {
+      border-left-width: 2px;
+    }
+
+    .time-slice:last-child {
+      border-right-width: 2px;
+    }
+
+    .track {
+      width: 480px;
+      height: 80px;
+      position: relative;
+    }
+
+    .track::before,
+    .track::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      box-sizing: border-box;
+      border: 2px dashed white;
+    }
+
+    .track::before {
+      left: 0;
+      top: 0;
+    }
+
+    .track::after {
+      right: 0;
+      top: 0;
+    }
+
+    .red-box {
+      position: absolute;
+      z-index: 99;
+      width: 80px;
+      height: 80px;
+      background-color: #ff1457;
+      top: 0;
+      left: 0;
+      /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+      animation: move 5s steps(5, jump-start) 0s 1 normal forwards;
+      /* animation: move 5s steps(5, jump-end) 0s 1 normal forwards; */
+      /* animation: move 5s steps(5, jump-both) 0s 1 normal forwards; */
+      /* animation: move 5s steps(5, jump-none) 0s 1 normal forwards; */
+    }
+
+    @keyframes move {
+      to {
+        left: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="time-bar">
+    <div class="time-slice"></div>
+    <div class="time-slice"></div>
+    <div class="time-slice"></div>
+    <div class="time-slice"></div>
+    <div class="time-slice"></div>
+  </div>
+  <div class="track">
+    <div class="red-box"></div>
+  </div>
+</body>
+</html>
