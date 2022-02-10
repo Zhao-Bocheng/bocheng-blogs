@@ -183,12 +183,35 @@ jump-none
 
 另外可以看到，上述四个不同取值下，红色方块每一次跳步的位移距离是不一样的，这是因为浏览器会自动根据当前的`direction`取值和指定的步数，再根据在关键帧（`@keyframes`）中应用的CSS属性设置计算出在整个动画状态变化过程中的什么位置插值，再把插值位置的动画状态显示出来。比如，可以看出，当取值为`jump-both`时发生了六次插值，插值次数最多，也就是频次最高，为了在整个动画状态变化过程按照均匀跨度容下这六次插值，每次的偏移就比其他三个取值小点；而当取值为`jump-none`时发生了四次插值，插值次数最少，为了在整个动画状态变化过程按照均匀跨度容下这四次插值，每次的偏移就比其他三个取值大点。
 
+其实最开始关于北极熊奔跑的动画，可以用`jump-none`实现，由于此时每个动画状态都会停留一个时间间隔，那么可以按照动画帧数分为8步，然后最终状态设置为最后一帧恰好在可视区域中：
+
+```html
+<div class="running-bear"></div>
+```
+
+```css
+.running-bear {
+    width: 200px;
+    height: 100px;
+    background: url(./bear.png) 0 / cover no-repeat;
+    animation: run 1s steps(8, join-none) 0s infinite;
+}
+
+@keyframes run {
+    to {
+        background-position: 100%;
+    }
+}
+```
+
 ### 总结
 
 `jump-start`：在每个时间间隔开始的时候跳1步到下一状态位置；
 `jump-end`：在每个时间间隔结束的时候跳1步到下一状态位置；
 `jump-both`：在每个时间间隔开始和结束的时候跳1步到下一状态位置，跳步次数会比预设的多一次；
-`jump-none`：在每个状态位置停留够一个时间间隔才跳到下一位置，跳步次数会比与预设的少一次；
+`jump-none`：在每个状态位置停留够一个时间间隔才跳到下一位置，跳步次数会比与预设的少一次
+
+文章源码地址：https://gitee.com/thisismyaddress/bocheng-blogs/tree/master/css/CSS3%E5%8A%A8%E7%94%BB%E2%80%94%E2%80%94steps%E5%87%BD%E6%95%B0
 
 参考：
 > https://developer.mozilla.org/zh-CN/docs/Web/CSS/animation
