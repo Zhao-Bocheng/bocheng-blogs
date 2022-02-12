@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小熊跑跑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #242424;
+        }
+
+        @keyframes bear-run {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: -1600px 0;
+            }
+        }
+
+        @keyframes bear-box-run {
+            from {
+                left: -200px;
+            }
+
+            to {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes bg-move {
+            from {
+                left: 0;
+            }
+            to {
+                left: -3840px;
+            }
+            /* from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: -3840px 0;
+            } */
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 569px;
+            /* 将容器外多余部分隐藏 */
+            overflow: hidden;
+        }
+
+        .bg1 {
+            position: absolute;
+            z-index: 1;
+            bottom: 0;
+            width: calc(3840px + 100%);
+            height: 336px;
+            background: url(./img/bg1.png) repeat-x;
+            animation: bg-move 30s linear 0s infinite normal none;
+        }
+
+        .bg2 {
+            position: absolute;
+            bottom: 0;
+            width: calc(3840px + 100%);
+            height: 569px;
+            background: url(./img/bg2.png) repeat-x;
+            animation: bg-move 40s linear 0s infinite normal none;
+        }
+
+        .bear {
+            position: absolute;
+            z-index: 999;
+            bottom: 80px;
+            width: 200px;
+            height: 100px;
+            background: url(./img/bear.png) no-repeat;
+            animation: bear-run 1s steps(8) 0s infinite normal none, bear-box-run 3s linear 0s 1 normal forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        1、雪山动画的实现：
+        将素材图片作为背景图应用到“雪山”盒子里（.bg1 和 .bg2）
+        动画实现有 两种 方式：
+        a. 移动 整个“雪山”盒子（盒子是绝对定位的，left的值从 0 变化到 -3840px）
+        注意：这里两个盒子的宽度都比背景图的宽度宽 一个屏幕宽度（3840px + 100%），这是为了动画循环播放时衔接顺畅
+        b. 移动 背景图片
+        注意：背景图片要设置为在水平方向重复，即 "repeat-x"
+
+        2、小熊动画的实现：
+        将素材图片作为背景图应用到“小熊”盒子里（.bear）
+        小熊动画包括两部分：
+        a. 小熊一直要保持的连贯奔跑效果
+        b. 小熊在开场时跑到中间
+        a部分的动画要通过 移动背景图片 来实现，这里使用的动画定时函数为 steps(8) ，动画重复次数为 无限次
+        b部分的动画要通过 移动整个盒子 来实现，并且在盒子移动到中间位置时就保持住最后的状态不再移动（将 fill-mode 设置为 forwards）
+     -->
+    <div class="container">
+        <div class="bg1"></div>
+        <div class="bg2"></div>
+        <div class="bear"></div>
+    </div>
+</body>
+</html>
