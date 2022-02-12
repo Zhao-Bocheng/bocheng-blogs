@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倒计时</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .count-down-box {
+            width: 300px;
+            height: 150px;
+            background-color: #f74730;
+            margin: 0 auto;
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        .count-down-title {
+            padding-top: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .clock-con {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            height: 80px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        .day-box {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%) rotate(-35deg);
+            z-index: 99;
+            font-size: 12px;
+            font-weight: bold;
+            color: #f74730;
+            background-color: white;
+            border-radius: 4px;
+            padding: 0 2px;
+        }
+
+        .time-item {
+            position: relative;
+            width: 30%;
+            height: 100%;
+        }
+
+        .time-item-num {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            text-align: center;
+            font-size: 60px;
+            line-height: 80px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .time-item-bg {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+        }
+
+        .time-item-bg::before,
+        .time-item-bg::after {
+            content: "";
+            width: 100%;
+            height: 48%;
+            background-color: rgba(0, 0, 0, .8);
+        }
+
+        .deadline-box {
+            width: 300px;
+            /* height: 30px; */
+            margin: 0 auto;
+            margin-top: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* .deadline-str-box {} */
+
+        .edit-box {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 200px;
+        }
+
+        .edit-box input {
+            width: 200px;
+            height: 30px;
+            padding-left: 7px;
+            font-size: 16px;
+            border: 1px solid #f74730;
+        }
+
+        .edit-box input:focus {
+            outline: none;
+        }
+
+        .confirm-btn {
+            display: inline-block;
+            width: 50px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            border-radius: 4px;
+            background-color: #f74730;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="count-down-box">
+        <h3 class="count-down-title">距离结束还有</h3>
+        <div class="clock-con">
+            <div class="day-box" id="day">
+                <span id="day-num">123</span>天
+            </div>
+            <div class="time-item" id="hour">
+                <div class="time-item-bg"></div>
+                <div class="time-item-num" id="hour-num">12</div>
+            </div>
+            <div class="time-item" id="min">
+                <div class="time-item-bg"></div>
+                <div class="time-item-num" id="min-num">12</div>
+            </div>
+            <div class="time-item" id="sec">
+                <div class="time-item-bg"></div>
+                <div class="time-item-num" id="sec-num">00</div>
+            </div>
+        </div>
+    </div>
+    <div class="deadline-box">
+        截止时间：
+        <span class="deadline-str-box" id="deadline-str"></span>
+    </div>
+    <div class="edit-box">
+        <input type="text" placeholder="xxxx-xx-xx xx:xx:xx" id="edit-deadline">
+        <a href="javascript:" class="confirm-btn" id="confirm-btn">reset</a>
+    </div>
+
+
+    <script>
+        /*
+            - 一个Date对象直接相加减是通过 毫秒数 进行的，
+              如果要经过相加减改变时间，可以对Date对象直接加减毫秒数
+        */
+
+        // 获取各个需要往里面填入数据的节点
+        const hourBox = document.getElementById('hour-num');
+        const minBox = document.getElementById('min-num');
+        const secBox = document.getElementById('sec-num');
+        const deadlineStrBox = document.getElementById('deadline-str');
+        const editDeadline = document.getElementById("edit-deadline");
+        const confirmBtn = document.getElementById('confirm-btn');
+        const dayBox = document.getElementById('day-num');
+        const dayCon = document.getElementById('day'); 
+
+        // 打印截止日期时间到对应位置，并将函数返回值接收（是一个日期）
+        // 参数是要将截止日期数据填入的地方（节点）
+        let deadline = OutputDeadlineStr(deadlineStrBox);
+
+        // 利用获取的截止日期进行倒计时操作，返回值是当前距离截止日期剩余的毫秒数
+        // 参数依次为 截止日期 小时数盒子 分钟数盒子 秒数盒子
+        let millis = CountDown(deadline, hourBox, minBox, secBox);
+        
+        // 设置一个定时器，制作每隔一秒刷新一次时间的效果，倒计时效果就出现了 
+        let timerID = -1;
+        // 只有当剩余时间（毫秒数）大于0时才能进入倒计时
+        if (millis > 0) {
+            timerID = setInterval(() => {
+                let millis = CountDown(deadline, hourBox, minBox, secBox);
+                // 当没有剩余时间了就停止定时器
+                if (!millis) {
+                    clearInterval(timerID);
+                }
+            }, 1000);
+        }
+
+        // 重置按钮的点击事件，当点击之后就处理输入框中输入的日期时间字符串
+        // 这里没有容错功能，如果用户胡乱输入的话将不会进行识别！！！
+        confirmBtn.addEventListener("click", () => {
+            // 只有当输入框中有输入值时才进行相关处理
+            if (editDeadline.value) {
+                // 接收日期时间字符串
+                let dateStr = editDeadline.value;
+                // 利用接收的日期时间字符串生成一个Date对象
+                let newDeadlineDate = new Date(dateStr);
+                // 将这个新的Date对象写入本地存储，最终写入的是一个英文的日期时间字符串
+                localStorage.setItem('deadlineDate', newDeadlineDate);
+                // 清空输入框
+                editDeadline.value = '';
+
+                // 当有新的截止时间时要对倒计时小时部分进行更新
+                // 打印新的截止时间
+                let deadline = OutputDeadlineStr(deadlineStrBox);
+                // 清除旧的定时器，否则旧的定时器会影响后续操作
+                clearInterval(timerID);
+                // 根据剩余的毫秒数设置定时器，实现倒计时效果
+                let millis = CountDown(deadline, hourBox, minBox, secBox);
+                if (millis > 0) {
+                    timerID = setInterval(() => {
+                        let millis = CountDown(deadline, hourBox, minBox, secBox);
+                        if (!millis) {
+                            clearInterval(timerID);
+                        }
+                    }, 1000);
+                }
+            }
+        })
+
+        // 打印截止日期字符串
+        function OutputDeadlineStr(deadlineStrBox) {
+            // 尝试获取从本地存储获取截止日期数据
+            let deadlineDate = new Date(localStorage.getItem('deadlineDate'));
+            let curTime = new Date();
+            let deadline = deadlineDate;
+            // 查看是否有截止日期缓存，如果没有的话则将截止日期设置为进入网页的时间
+            if (!localStorage.getItem('deadlineDate')) {
+                deadline = curTime;
+                deadlineDate = curTime;
+                // localStorage.setItem('deadlineDate', deadlineDate);
+            }
+            // 打印截止日期字符串
+            let dmonth = deadlineDate.getMonth() + 1;
+            let dday = deadlineDate.getDate();
+            let dhour = deadlineDate.getHours();
+            let dmin = deadlineDate.getMinutes();
+            let dsec = deadlineDate.getSeconds();
+            deadlineStrBox.innerHTML = deadlineDate.getFullYear() + '年' +
+                (dmonth < 10 ? '0' + dmonth : dmonth) + '月' +
+                (dday < 10 ? '0' + dday : dday) + '日' + ' ' +
+                (dhour < 10 ? '0' + dhour : dhour) + ':' +
+                (dmin < 10 ? '0' + dmin : dmin) + ':' +
+                (dsec < 10 ? '0' + dsec : dsec);
+
+            // 返回截止日期
+            return deadline;
+        }
+
+        // 实现打印此时的剩余时间数，需要和定时器配合使用，以便一秒刷新一次，达成倒计时效果
+        function CountDown(deadline, hourBox, minBox, secBox) {
+            let curTime = new Date();
+            let millis = deadline - curTime;
+
+            millis = millis < 0 ? 0 : millis;
+
+            let day = parseInt(millis / 1000 / 60 / 60 / 24);
+            let hour = parseInt(millis / 1000 / 60 / 60 % 24);
+            let min = parseInt(millis / 1000 / 60 % 60);
+            let sec = parseInt(millis / 1000 % 60);
+            hourBox.innerHTML = hour < 10 ? '0' + hour : hour;
+            minBox.innerHTML = min < 10 ? '0' + min : min;
+            secBox.innerHTML = sec < 10 ? '0' + sec : sec;
+            // 如果剩余时间没有超过1天则不需要显示天数
+            if(day > 0) {
+                dayBox.innerHTML = day;
+                dayCon.style.visibility = "visible";
+            } else {
+                dayCon.style.visibility = "hidden";
+            }
+
+            return millis;
+        }
+    </script>
+</body>
+
+</html>
