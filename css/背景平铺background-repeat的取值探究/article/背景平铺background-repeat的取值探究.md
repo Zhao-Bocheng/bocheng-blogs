@@ -55,5 +55,7 @@ repeat-x 和 repeat-y 只能用于单值语法，其余值可以用于单值和�
 
 ![differentTwoVals.png](img/differentTwoVals.png)
 
+文章源码：<https://gitee.com/thisismyaddress/bocheng-blogs/tree/master/css/%E8%83%8C%E6%99%AF%E5%B9%B3%E9%93%BAbackground-repeat%E7%9A%84%E5%8F%96%E5%80%BC%E6%8E%A2%E7%A9%B6>
+
 参考：
 > <https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-repeat>
