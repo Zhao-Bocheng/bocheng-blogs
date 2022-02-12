@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>规范使用内外边距</title>
+    <style>
+        .con {
+            width: 500px;
+            margin: 0 auto;
+            border: 1px solid red;
+        }
+        .parent {
+            width: 100%;
+            height: 100px;
+            background-color: pink;
+            /* 统一使用 上外边距 实现 相邻元素间 的间隔 来 避免塌陷问题 */
+            margin-top: 50px;
+            /* 使用 内边距 来 实现 父子元素 的间隔 */
+            padding-top: 20px;
+        }
+
+        .son {
+            width: 50%;
+            height: 50px;
+            margin: 0 auto;
+            background-color: cyan;
+        }
+    </style>
+</head>
+<body>
+    <div class="con">
+        <div class="parent">
+            <div class="son"></div>
+        </div>
+        <div class="parent">
+            <div class="son"></div>
+        </div>
+        <div class="parent">
+            <div class="son"></div>
+        </div>
+    </div>
+</body>
+</html>
