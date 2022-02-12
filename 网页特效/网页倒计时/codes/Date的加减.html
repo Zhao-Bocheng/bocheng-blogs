@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date的加减</title>
+</head>
+
+<body>
+    <script>
+        // Date对象实例是可以直接通过减法改变时间的，此时与Date对象相减的整数表示的是毫秒数
+        let deadlineDate1 = new Date();
+        console.log(deadlineDate1);
+        deadlineDate1 = deadlineDate1 - 24 * 60 * 60 * 1000; // 此时日期减少了一天
+        console.log(deadlineDate1); // 输出毫秒数
+        // console.log(deadlineDate1.toDateString());
+
+        // Date对象实例是可以直接和Date对象实例相加减的，也可以直接和毫秒数（整数）相加减，此时表示的是两个毫秒数的加减
+        let deadlineDate2 = new Date("2021-6-26 17:00:00");
+        let deadlineMillis = +new Date("2021-6-26 17:00:00");
+        let curTime = new Date();
+        console.log(deadlineDate2 - curTime); // 此时输出毫秒数的差值
+        console.log(deadlineMillis - curTime); // 此时输出毫秒数的差值
+
+        let deadlineDate3 = new Date();
+        console.log(deadlineDate3 + 24 * 60 * 60 * 1000); // 日期字符串和数值的拼接
+        console.log(deadlineDate3 * 2); // 原有毫秒值的两倍
+    </script>
+</body>
+
+</html>
