@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六种取值的表现</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .con {
+            float: left;
+            width: 33.333333%;
+            height: 200px;
+            box-sizing: border-box;
+            border: 1px solid red;
+            background-image: url(./img/test.png);
+            text-align: center;
+            line-height: 200px;
+            color: red;
+            font-weight: bold;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="con" style="background-repeat: repeat-x;">repeat-x</div>
+    <div class="con" style="background-repeat: repeat-y;">repeat-y</div>
+    <div class="con" style="background-repeat: repeat;">repeat</div>
+    <div class="con" style="background-repeat: space;">space</div>
+    <div class="con" style="background-repeat: round;">round</div>
+    <div class="con" style="background-repeat: no-repeat;">no-repeat</div>
+</body>
+</html>

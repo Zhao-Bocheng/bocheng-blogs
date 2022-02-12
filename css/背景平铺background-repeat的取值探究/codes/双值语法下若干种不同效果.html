@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双值语法下若干种不同效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .con {
+            float: left;
+            width: 33.333333%;
+            height: 200px;
+            box-sizing: border-box;
+            border: 1px solid red;
+            background-image: url(./img/test.png);
+            text-align: center;
+            line-height: 200px;
+            color: red;
+            font-weight: bold;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="con" style="background-repeat: repeat space;">repeat space</div>
+    <div class="con" style="background-repeat: space round;">space round</div>
+    <div class="con" style="background-repeat: space no-repeat;">space no-repeat</div>
+    <div class="con" style="background-repeat: space repeat;">space repeat</div>
+    <div class="con" style="background-repeat: round space;">round space</div>
+    <div class="con" style="background-repeat: round no-repeat;">round no-repeat</div>
+</body>
+</html>
