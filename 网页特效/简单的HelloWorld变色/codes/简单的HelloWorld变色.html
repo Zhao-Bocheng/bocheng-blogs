@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单的HelloWorld变色</title>
+    <style>
+        :root {
+            --text-origin-color: black;
+            --text-effect-color: red;
+            --turn-color-text: "变为红色";
+        }
+
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .con {
+            width: 350px;
+            margin-top: 200px;
+            text-align: center;
+        }
+
+        #text {
+            position: relative;
+            width: 100%;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 100px;
+            color: var(--text-origin-color);
+        }
+
+        #cover-text {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;    
+            color: var(--text-effect-color);
+            transition: 1s ease;
+            clip-path: circle(0px);      
+        }
+
+        .effect-text {
+            clip-path: circle(200px) !important;
+        }
+
+        .btn-box {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        button {
+            position: relative;
+            background: none;
+            width: 150px;
+            height: 50px;
+            border: 4px solid;
+            font-size: 18px;
+        }
+
+        button::before,
+        button::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 4px;
+            background-color: white;
+            transform: skew(-50deg);
+            transition: .4s linear;
+        }
+
+        button::before {
+            top: -4px;
+            left: 20%;
+        }
+
+        button::after {
+            bottom: -4px;
+            right: 20%;
+        }
+
+        button:hover::before {
+            left: 80%;
+        }
+
+        button:hover::after {
+            right: 80%;
+        }
+
+        #turn-color {
+            color: var(--text-effect-color);
+            border-color: var(--text-effect-color);
+        }
+        #turn-color-text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        #turn-color-text::before {
+            content: var(--turn-color-text);
+        }
+    </style>
+</head>
+<body>
+    <div class="con">
+        <div id="text">
+            Hello World!
+            <div id="cover-text">
+                Hello World!
+            </div>
+        </div>
+        <div class="btn-box">
+            <!-- 
+                里面的 span 用于承载文字，这是为了利用伪元素的 content 来通过 CSS 变量动态替换文字内容， 
+                由于外层的 button 标签的两个伪元素已经被用于制作按钮框的悬浮动态效果，所以只能再添加一个标签以便使用它的伪元素
+            -->
+            <button id="turn-color"><span id="turn-color-text"></span></button>
+            <button id="reset">复原</button>
+        </div>
+    </div>
+
+
+    <script>
+        let coverText = document.getElementById('cover-text');
+        let redBtn = document.getElementById('turn-color');
+        let reset = document.getElementById('reset');
+
+        redBtn.addEventListener('click', () => {
+            coverText.classList.add('effect-text');
+        })
+
+        reset.addEventListener('click', () => {
+            coverText.classList.remove('effect-text');
+        })
+    </script>
+</body>
+</html>
