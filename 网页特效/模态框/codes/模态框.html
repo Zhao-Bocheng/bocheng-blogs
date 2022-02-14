@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模态框</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1e1e1e;
+            user-select: none;
+        }
+
+        #show-modal {
+            font-family: serif;
+            width: 200px;
+            height: 50px;
+            background: none;
+            border: 4px solid;
+            border-color: #73c991;
+            font-size: 20px;
+            font-weight: bold;
+            color: #73c991;
+            box-shadow: 0px 0px 4px 0px;
+            animation: blur-effect 4s ease-in-out 0s infinite;
+        }
+
+        #show-modal:hover {
+            animation-play-state: paused;
+            box-shadow: 0px 0px 15px 4px !important;
+        }
+
+        @keyframes blur-effect {
+            0% {
+                box-shadow: 0px 0px 4px 0px;
+            }
+
+            25% {
+                box-shadow: 0px 0px 15px 4px;
+            }
+
+            50% {
+                box-shadow: 0px 0px 4px 0px;
+            }
+
+            75% {
+                box-shadow: 0px 0px 15px 4px;
+            }
+
+            100% {
+                box-shadow: 0px 0px 4px 0px;
+            }
+        }
+
+        #modal-con {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #modal-box {
+            width: 400px;
+            height: 200px;
+            background-color: #333333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 20px;
+            color: #6eaadc;
+            user-select: none;
+        }
+
+        #modal-title {
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            cursor: move;
+        }
+
+        #modal-content {
+            font-size: 18px;
+        }
+
+        #modal-btn {
+            background: none;
+            border: 1px solid;
+            color: #6eaadc;
+            width: 50px;
+        }
+
+        #mask {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="show-modal">显示模态框</button>
+    <div id="mask"></div>
+    <div id="modal-con">
+        <div id="modal-box">
+            <h3 id="modal-title">模态框</h3>
+            <p id="modal-content">我是模态框</p>
+            <button id="modal-btn">确定</button>
+        </div>
+    </div>
+
+    <script>
+        let modalCon = document.getElementById('modal-con');
+        let modalTitle = document.getElementById('modal-title');
+        let modalBtn = document.getElementById('modal-btn');
+        let mask = document.getElementById('mask');
+        let showBtn = document.getElementById('show-modal');
+
+        // 显示模态框和遮罩层
+        showBtn.addEventListener('click', () => {
+            modalCon.style.display = 'block';
+            mask.style.display = 'block';
+        })
+
+        // 隐藏模态框和遮罩层
+        modalBtn.addEventListener('click', (e) => {
+            modalCon.style.display = 'none';
+            mask.style.display = 'none';
+            e.stopPropagation()
+        })
+
+        // 关键：实现模态框拖动效果
+        // 注意应当只能靠模态框部分区域拖动模态框，功能部分（如按钮）不应该作为可拖动区域
+        modalTitle.addEventListener('mousedown', (e) => {
+            let x = e.pageX - modalCon.offsetLeft;
+            let y = e.pageY - modalCon.offsetTop;
+            document.onmousemove = (e) => {
+                modalCon.style.left = e.pageX - x + 'px';
+                modalCon.style.top = e.pageY - y + 'px';
+            }
+        })
+        modalTitle.addEventListener('mouseup', (e) => {
+            document.onmousemove = '';
+        })
+    </script>
+</body>
+
+</html>
