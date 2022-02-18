@@ -1,4 +1,4 @@
-# VSCode中snippets的使用（代码模板）
+# VSCode中snippets（代码模板）的使用
 
 有时在使用VSCode进行前端编码时总会有一些代码段是需要重复编写的，这时使用一些代码模板（snippets），通过规定的字符序列触发snippets，快速地输入一段预设的代码模板会使编码效率提高
 
