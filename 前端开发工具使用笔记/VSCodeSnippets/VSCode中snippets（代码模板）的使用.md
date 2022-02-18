@@ -176,5 +176,7 @@ snippet 的配置文件是 JSON 文件，允许使用C语言风格的注释，�
 
 snippet语法允许使用的特殊结构不止以上的tabstops和palceholders的配置，还有其他的，详情参考[这里](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_snippet-syntax)
 
+文章源码：<https://gitee.com/thisismyaddress/bocheng-blogs/tree/master/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/VSCodeSnippets>
+
 参考：
 > <https://code.visualstudio.com/docs/editor/userdefinedsnippets>
