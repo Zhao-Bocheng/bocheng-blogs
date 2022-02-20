@@ -294,7 +294,7 @@ require("foo");
   __filename
   ```
 
-文章源码：<>
+文章源码：<https://gitee.com/thisismyaddress/bocheng-blogs/tree/master/js/%E6%A8%A1%E5%9D%97%E8%AF%AD%E6%B3%95ESM%E4%B8%8ECJS>
 
 参考：
 ><https://es6.ruanyifeng.com/#docs/module-loader>  
