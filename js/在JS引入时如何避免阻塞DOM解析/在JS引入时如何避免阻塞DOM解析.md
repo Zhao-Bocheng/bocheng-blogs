@@ -139,8 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 **`defer`可以延迟JS到 DOM 解析完成后执行**，按照标准的 HTML5 规范，`defer`可以保证脚本按照引入顺序执行（即使也是异步加载脚本）。
 
-文章源码：<>
+文章源码：<https://gitee.com/thisismyaddress/bocheng-blogs/tree/master/js/%E5%9C%A8JS%E5%BC%95%E5%85%A5%E6%97%B6%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E9%98%BB%E5%A1%9EDOM%E8%A7%A3%E6%9E%90>
 
 参考：
 ><https://developer.mozilla.org/zh-CN/docs/Learn/JavaScript/First_steps/What_is_JavaScript#%E8%84%9A%E6%9C%AC%E8%B0%83%E7%94%A8%E7%AD%96%E7%95%A5>\
+><https://developer.mozilla.org/zh-CN/docs/Web/API/Document/DOMContentLoaded_event>\
+><https://developer.mozilla.org/zh-CN/docs/Web/API/Window/load_event>\
 ><https://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html>
