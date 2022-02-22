@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>write()、innerHTML与createElement()效率对比</title>
+</head>
+<body>
+    <!-- <p id="write"></p> -->
+    <p id="create-element"></p>
+    <p id="inner-html"></p>
+
+    <script>
+        // const writeP = document.getElementById("write");
+        const createElemP = document.getElementById("create-element");
+        const innerHTMLP = document.getElementById("inner-html");
+
+        console.log("write()、innerHTML与createElement()效率对比");
+
+        // 使用 createElement() 创建，然后插入元素
+        console.time("elem.createElement() 耗时")
+        for(let i = 0; i < 1000; i ++) {
+            var a = document.createElement('a');
+            a.innerHTML = "anchor";
+            a.href = "#";
+            createElemP.appendChild(a);
+        }
+        console.timeEnd("elem.createElement() 耗时")
+
+
+        // 拼接原有内容，然后赋值给对应元素的 innerHTML
+        console.time("elem.innerHTML-直接拼接原有内容 耗时")
+        for(let i = 0; i < 1000; i ++) {
+            innerHTMLP.innerHTML = innerHTMLP.innerHTML + '<a href="#">anchor</a>'
+        }
+        console.timeEnd("elem.innerHTML-直接拼接原有内容 耗时")
+
+        // 拼接字符串数组，然后赋值给对应元素的 innerHTML
+        console.time("elem.innerHTML-拼接字符串数组 耗时")
+        var arr = [];
+        for(let i = 0; i <1000; i ++) {
+            arr.push('<a href="#">anchor</a>');
+        }
+        innerHTMLP.innerHTML = arr.join('');
+        console.timeEnd("elem.innerHTML-拼接字符串数组 耗时")
+
+        // 直接拼接一个总的字符串
+        console.time("elem.innerHTML-拼接多个字符串 耗时")
+        var anchors = '';
+        for(let i = 0; i < 1000; i ++) {
+            anchors += '<a href="#">anchor</a>';
+        }
+        innerHTMLP.innerHTML = anchors;
+        console.timeEnd("elem.innerHTML-拼接多个字符串 耗时")
+        
+
+        // 使用 write() 创建
+        // 由于 write() 无法准确地将元素写入到文档某个位置，就会在写入时都写在文档的末尾
+        console.time("document.write() 耗时")
+        for(let i = 0; i < 1000; i ++) {
+            document.write('<a href="#">anchor</a>');
+        }
+        console.timeEnd("document.write() 耗时")
+        
+    </script>
+</body>
+</html>

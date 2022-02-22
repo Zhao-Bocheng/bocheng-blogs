@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document.wirte()创建元素</title>
+</head>
+<body>
+    <h3>原有内容</h3>
+
+    <script>
+        var newContent = '<h3>新的内容</h3>'
+        document.write(newContent);
+
+        // 文档加载完毕再通过 write() 写入内容会将原有内容全部覆盖
+        window.onload = function() {
+            document.write('<h3>旧的不走，新的不来</h3>');
+        }
+    </script>
+</body>
+</html>
