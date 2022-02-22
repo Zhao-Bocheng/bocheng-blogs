@@ -78,7 +78,7 @@ document.createElement(tagName);
 
 `document.write()`和`elem.createElement()`是**方法**，但前者只能由`document`调用，并且是通过将HTML字符串转化为元素节点的方式创建元素，而`elem.createElement()`是一次创建一个元素节点，并且一定要进行添加节点到文档中的操作才能呈现节点。`elem.innerHTML`是一个**属性**，也是通过将HTML字符串转化为元素节点的方式创建元素，在进行重复添加元素节点的操作时，它的效率会低一点
 
-文章源码：<>
+文章源码：<https://gitee.com/thisismyaddress/bocheng-blogs/tree/master/js/%E5%88%9B%E5%BB%BADOM%E5%85%83%E7%B4%A0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F>
 
 参考：
 ><https://developer.mozilla.org/zh-CN/docs/Web/API/Element/innerHTML>\
