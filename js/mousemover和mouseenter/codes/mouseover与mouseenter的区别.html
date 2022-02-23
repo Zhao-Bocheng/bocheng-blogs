@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mouseover与mouseenter的区别</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .parent-over,
+        .parent-enter {
+            float: left;
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            margin-left: 10px;
+        }
+
+        .son-over,
+        .son-enter {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            margin: 0 auto;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent-over">
+        mouserover
+        <div class="son-over">son</div>
+    </div>
+
+    <div class="parent-enter">
+        mouseenter
+        <div class="son-enter">son</div>
+    </div>
+
+    <script>
+        const over = document.querySelector(".parent-over");
+        const enter = document.querySelector(".parent-enter");
+
+        over.addEventListener("mouseover", function() {
+            console.log("mouseover");
+        });
+        enter.addEventListener("mouseenter", function() {
+            console.log("mouseenter");
+        });
+    </script>
+</body>
+
+</html>
