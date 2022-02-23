@@ -1,4 +1,4 @@
-# mouseover和mouseenter
+# 由mouseover和mouseenter引发的思考
 
 这是两个都是鼠标移入事件，首先要明确的是**`mouseover`可以冒泡，而`mouoseenter`无法冒泡**，这是它们的最根本区别
 
