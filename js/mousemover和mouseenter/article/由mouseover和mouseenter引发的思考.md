@@ -104,7 +104,7 @@ son.addListener("mouseover", function(e) {
 
 由此可见，`click`根本没有在捕获阶段执行事件处理函数的需要
 
-文章源码：<>
+文章源码：<https://gitee.com/thisismyaddress/bocheng-blogs/tree/master/js/mousemover%E5%92%8Cmouseenter>
 
 参考：
 ><https://developer.mozilla.org/zh-CN/docs/Web/API/Event/stopPropagation>\
