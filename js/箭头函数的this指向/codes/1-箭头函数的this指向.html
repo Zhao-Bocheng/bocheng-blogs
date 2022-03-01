@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>箭头函数的this指向</title>
+</head>
+<body>
+    <button id="func">使用function构建事件处理函数</button>
+    <button id="arrow">使用箭头函数构建事件处理函数</button>
+
+    <script>
+        const func = document.getElementById("func")
+        const arrow = document.getElementById("arrow");
+
+        func.addEventListener("click", function() {
+            console.log(this);
+        });
+        arrow.addEventListener("click", () => {
+            console.log(this);
+        });
+    </script>
+</body>
+</html>
