@@ -77,4 +77,4 @@ obj.func2(); // 打印出 当前对象obj
 
 ![解释](img/explanation2.png "解释")
 
-文章源码：<>
+文章源码：<https://gitee.com/thisismyaddress/bocheng-blogs/tree/master/js/%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84this%E6%8C%87%E5%90%91>
