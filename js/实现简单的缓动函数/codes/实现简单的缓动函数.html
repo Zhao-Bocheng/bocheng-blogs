@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现简单的缓动函数</title>
+    <style>
+        #con {
+            position: relative;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        #the-one {
+            /* 缓动函数中应用的样式是 left ，所以一定要记得加绝对定位 */
+            position: absolute;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background-color: cyan;
+        }
+
+        #target-line {
+            position: absolute;
+            left: 790px;
+            width: 10px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="move">move to target</button>
+    <button id="reset">reset</button>
+    <div id="con">
+        <div id="the-one"></div>
+        <div id="target-line"></div>
+    </div>
+    <h3 id="tip"></h3>
+
+    <script>
+        function animateEase(obj, target, callback) {
+            clearInterval(obj.timer);
+
+            let interval = 30; // ms
+            obj.timer = setInterval(() => {
+                let step = (target - obj.offsetLeft) / 10;
+                console.log(step);
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                obj.style.left = obj.offsetLeft + step + 'px';
+
+                if (target == obj.offsetLeft) {
+                    clearInterval(obj.timer);
+                    if (callback) {
+                        callback();
+                    }
+                }
+            }, interval);
+        }
+
+        const target = 800;
+
+        var theOne = document.getElementById("the-one");
+        var move = document.getElementById("move");
+        var reset = document.getElementById("reset");
+        var tip = document.getElementById("tip");
+
+        move.addEventListener("click", () => {
+            animateEase(theOne, target, function() {
+                tip.innerHTML = "Arrive To Target"
+            });
+        });
+        reset.addEventListener("click", () => {
+            animateEase(theOne, 0, function() {
+                tip.innerHTML = "Back To Origin"
+            });
+        });
+    </script>
+</body>
+
+</html>
