@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣杯布局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+        }
+        header {
+            width: 100%;
+            height: 100px;
+            background-color: pink;
+        }
+        .wrapper {
+            padding: 0px 100px;
+        }
+        .wrapper::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+        .center {
+            float: left;
+            width: 100%;
+            height: 200px;
+            background-color: cyan;
+        }
+        .left {
+            position: relative;
+            float: left;
+            width: 100px;
+            height: 200px;
+            margin-left: -100%;
+            left: -100px;
+            background-color: violet;
+        }
+        .right {
+            position: relative;
+            float: left;
+            width: 100px;
+            height: 200px;
+            margin-left: -100px;
+            right: -100px;
+            background-color: yellowgreen;
+        }
+        footer {
+            width: 100%;
+            height: 200px;
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <header>头部</header>
+    <!-- 使用一个盒子将左中右三个盒子包围 -->
+    <div class="wrapper">
+        <!-- 注意：这里中间盒子写在最前面 -->
+        <!-- 
+            左中右三个盒子都是浮动的，中间盒子两侧留出了空白， 
+            为了使左右两个盒子能放置到空白位置，需要应用到 水平负外边距 和 相对定位 
+        -->
+        <div class="center">中间</div>
+        <div class="left">左侧</div>
+        <div class="right">右侧</div>
+    </div>
+    <footer>底部</footer>
+</body>
+</html>
