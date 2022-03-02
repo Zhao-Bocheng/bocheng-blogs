@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放大镜效果实现方式2——利用背景图片相关属性</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #image {
+            width: 150px;
+            height: 150px;
+            background-image: url(./img/doge.webp);
+            background-size: 150px auto;
+            background-position: 0 0;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="image"></div>
+
+    <script>
+        // 移动盒子的背景图片
+
+        // 将事件处理函数中的 image 统一改为 e.target 即可提升一点点的复用性
+        var image = document.getElementById('image');
+        image.addEventListener('mouseenter', (e) => {
+            // image.style.backgroundSize = 'auto';
+            e.target.style.backgroundSize = '450px';
+        });
+        image.addEventListener('mouseleave', (e) => {
+            // image.style.backgroundSize = '';
+            // image.style.backgroundPosition = '';
+            e.target.style.backgroundSize = '';
+            e.target.style.backgroundPosition = '';
+        });
+        image.addEventListener('mousemove', (e) => {
+            // let x = e.pageX - image.offsetLeft;
+            // let y = e.pageY - image.offsetTop;
+            // // 偏移百分比
+            // let xOffset = x / image.offsetWidth * 100;
+            // let yOffset = y / image.offsetHeight * 100;
+    
+            // image.style.backgroundPosition = xOffset + '% ' + yOffset + '%';
+
+            let x = e.pageX - e.target.offsetLeft;
+            let y = e.pageY - e.target.offsetTop;
+            
+            // 使用偏移百分比移动背景图片——这是因为比较难获得背景图片的尺寸信息，
+            // 尺寸信息如果取为定值，那么当背景图片尺寸变了，程序就要修改了，不如直接利用背景图片的百分比取值，来将对应位置对齐，
+            // 甚至都不用计算偏移的距离
+            let xOffset = x / e.target.offsetWidth * 100;
+            let yOffset = y / e.target.offsetHeight * 100;
+            
+            e.target.style.backgroundPosition = xOffset + '% ' + yOffset + '%';
+        });
+    </script>
+</body>
+</html>

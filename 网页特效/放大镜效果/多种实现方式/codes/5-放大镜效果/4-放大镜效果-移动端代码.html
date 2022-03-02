@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放大镜效果-移动端代码</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #image {
+            width: 150px;
+            height: 150px;
+            background-image: url(./img/doge.webp);
+            background-size: 150px auto;
+            background-position: 0 0;
+            background-repeat: no-repeat;
+        }
+
+        #image[zoomed] {
+            /* background-size: auto auto; */
+            background-size: 450px auto;
+            background-position: calc(var(--x) * 100%) calc(var(--y) * 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 新的API e.offsetX e.offsetY getBoundingClientRect()
+         操作属性 setAttribute() setProperty() -->
+
+    <div id="image"></div>
+
+    <script>
+        let image = document.getElementById('image');
+
+        image.addEventListener('touchstart', (e) => {
+            e.target.setAttribute('zoomed', 1);
+            // 避免重新触摸后未移动时图片位置不正确
+            moveHandler(e);
+        });
+
+        image.addEventListener('touchend', (e) => {
+            e.target.removeAttribute('zoomed');
+        });
+
+        image.addEventListener('touchmove', moveHandler);
+        // image.addEventListener('touchmove', moveHandler2);
+
+        // 禁止长按菜单
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        })
+
+        // 使用相对于视口计算的位置属性 clientX clientY getBoundingClientRect() 的 top 和 left
+        function moveHandler(e) {
+            // 防止页面被拖动
+            e.preventDefault();
+
+            let rect = e.target.getBoundingClientRect();
+
+            // 由于 touch 事件没有 offsetX 和 offsetY 属性，所以需要进行额外的计算操作
+            // 可能有多个触摸点，这里只取一个触摸点来计算触摸的位置 e.touches[0]
+            // 使用相对于视口计算的触摸点位置 clientX 和 clientY（方法返回的框体位置信息是相对于视口而言的）
+            // rect = e.target.getBoundingClientRect()
+            let x = e.touches[0].clientX - rect.left;
+            let y = e.touches[0].clientY - rect.top;
+            // 限制范围
+            x = Math.min(Math.max(0, x), rect.width);
+            y = Math.min(Math.max(0, y), rect.height);
+            // x = x < 0 ? 0 : x;
+            // x = x > rect.width ? rect.width : x;
+            // y = y < 0 ? 0 : y;
+            // y = y > rect.height ? rect.height : y;
+
+            let xOffset = x / rect.width;
+            let yOffset = y / rect.height;
+
+            e.target.style.setProperty('--x', xOffset);
+            e.target.style.setProperty('--y', yOffset);
+        }
+
+        // 使用相对于页面计算的位置属性 pageX pageY offsetTop offsetLeft
+        function moveHandler2(e) {
+            // 防止页面被拖动
+            e.preventDefault();
+            
+            // 如果要使用相对于页面计算的触摸点位置 pageX 和 pageY，则需要采用同样相对于页面计算的框体位置信息 offsetLeft 和 offsetTop
+            let x = e.touches[0].pageX - e.touches[0].target.offsetLeft;
+            let y = e.touches[0].pageY - e.touches[0].target.offsetTop;
+            // 限制范围
+            x = Math.min(Math.max(0, x), e.touches[0].target.offsetWidth);
+            y = Math.min(Math.max(0, y), e.touches[0].target.offsetHeight);
+            // x = x < 0 ? 0 : x;
+            // x = x > e.touches[0].target.offsetWidth ? e.touches[0].target.offsetWidth : x;
+            // y = y < 0 ? 0 : y;
+            // y = y > e.touches[0].target.offsetHeight ? e.touches[0].target.offsetHeight : y;
+
+            let xOffset = x / e.touches[0].target.offsetWidth;
+            let yOffset = y / e.touches[0].target.offsetHeight;
+
+            e.target.style.setProperty('--x', xOffset);
+            e.target.style.setProperty('--y', yOffset);
+        }
+    </script>
+</body>
+
+</html>

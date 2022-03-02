@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放大镜效果实现方式3——利用尽可能多的CSS样式实现</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #image {
+            width: 150px;
+            height: 150px;
+            background-image: url(./img/doge.webp);
+            background-size: 150px auto;
+            background-position: 0 0;
+            background-repeat: no-repeat;
+        }
+
+        #image[zoomed] {
+            /* background-size: auto auto; */
+            background-size: 450px auto;
+            background-position: calc(var(--x) * 100%) calc(var(--y) * 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- 新的API e.offsetX e.offsetY getBoundingClientRect()
+         操作属性 setAttribute() setProperty() -->
+
+    <div id="image"></div>
+
+    <script>
+        let image = document.getElementById('image');
+
+        image.addEventListener('mouseenter', (e) => {
+            e.target.setAttribute('zoomed', 1);
+        });
+
+        image.addEventListener('mouseleave', (e) => {
+            e.target.removeAttribute('zoomed');
+        });
+
+        image.addEventListener('mousemove', (e) => {
+            let rect = e.target.getBoundingClientRect();
+
+            let xOffset = e.offsetX / rect.width;
+            let yOffset = e.offsetY / rect.height;
+
+            e.target.style.setProperty('--x', xOffset);
+            e.target.style.setProperty('--y', yOffset);
+        });
+    </script>
+</body>
+</html>

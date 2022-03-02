@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放大镜效果-兼容PC和移动端</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #image {
+            width: 150px;
+            height: 150px;
+            background-image: url(./img/doge.webp);
+            background-size: 150px auto;
+            background-position: 0 0;
+            background-repeat: no-repeat;
+        }
+
+        #image[zoomed] {
+            /* background-size: auto auto; */
+            background-size: 450px auto;
+            background-position: calc(var(--x) * 100%) calc(var(--y) * 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 新的API e.offsetX e.offsetY getBoundingClientRect()
+         操作属性 setAttribute() setProperty() -->
+
+    <div id="image"></div>
+
+    <script>
+        let image = document.getElementById('image');
+
+        image.addEventListener('mouseenter', enterHandler);
+        image.addEventListener('mouseleave', leaveHandler);
+        image.addEventListener('mousemove', moveHandler);
+
+        image.addEventListener('touchstart', enterHandler);
+        image.addEventListener('touchend', leaveHandler);
+        image.addEventListener('touchmove', moveHandler);
+
+        // 这里需要特地抽离出一个事件处理函数，因为无法移除一个为匿名函数的监听器
+        function prevent(e) {
+            e.preventDefault();
+        }
+
+        function enterHandler(e) {
+            e.target.setAttribute('zoomed', 1);
+            // 避免重新触摸后未移动时图片位置不正确
+            moveHandler(e);
+
+            if (e.type === 'touchstart') {
+                // 禁止长按菜单
+                document.addEventListener('contextmenu', prevent)
+            } else {
+                // 取消禁止长按菜单
+                document.removeEventListener('contextmenu', prevent);
+            }
+        }
+
+        function leaveHandler(e) {
+            e.target.removeAttribute('zoomed');
+        }
+
+        function moveHandler(e) {
+            let eventObj = null;
+
+            if (['touchstart', 'touchend', 'touchmove'].includes(e.type)) {
+                // 防止页面被拖动
+                e.preventDefault();
+
+                // 可能有多个触摸点，这里只取一个触摸点来计算触摸的位置 e.touches[0]
+                eventObj = e.touches[0];
+            } else {
+                eventObj = e;
+            }
+
+            let x = eventObj.pageX - eventObj.target.offsetLeft;
+            let y = eventObj.pageY - eventObj.target.offsetTop;
+
+            // 限制范围
+            x = Math.min(Math.max(0, x), eventObj.target.offsetWidth);
+            y = Math.min(Math.max(0, y), eventObj.target.offsetHeight);
+
+            let xOffset = x / eventObj.target.offsetWidth;
+            let yOffset = y / eventObj.target.offsetHeight;
+
+            e.target.style.setProperty('--x', xOffset);
+            e.target.style.setProperty('--y', yOffset);
+        }
+    </script>
+</body>
+
+</html>

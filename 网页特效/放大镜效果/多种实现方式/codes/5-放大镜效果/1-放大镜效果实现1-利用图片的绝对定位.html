@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放大镜效果实现方式1——利用图片的绝对定位</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #image {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        #image img {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="image">
+        <img src="./img/doge.webp" alt="doge">
+    </div>
+
+    <script>
+        // 移动盒子内的一张图片
+        
+        let imageBox = document.getElementById('image');
+        let img = document.querySelector('#image img');
+
+        imageBox.addEventListener('mouseenter', () => {
+            img.style.width = '450px';
+        })
+
+        // 清除所有样式 >> 恢复原样
+        imageBox.addEventListener('mouseleave', () => {
+            img.style.width = '';
+            img.style.top = '';
+            img.style.left = '';
+        })
+
+        imageBox.addEventListener('mousemove', (e) => {
+            let x = e.pageX - imageBox.offsetLeft;
+            let y = e.pageY - imageBox.offsetTop;
+            let targetX = img.offsetWidth * x / imageBox.offsetWidth;
+            let targetY = img.offsetHeight * y / imageBox.offsetHeight;
+            let distanceX = targetX - x;
+            let distanceY = targetY - y;
+            img.style.left = - distanceX + 'px';
+            img.style.top = - distanceY + 'px';
+        })
+    </script>
+</body>
+</html>
