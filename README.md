@@ -6,3 +6,5 @@
 
 [gitee仓库地址](https://gitee.com/thisismyaddress/bocheng-blogs)\
 [github仓库地址](https://github.com/Zhao-Bocheng/bocheng-blogs)
+
+drawio: 仓库中的`.drawio`文件是我在[diagrams](https://app.diagrams.net)这个网站绘图时的源文件
